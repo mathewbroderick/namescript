@@ -1,0 +1,26 @@
+function insertTextToDoc() {
+  var doc = DocumentApp.openById('ID_HERE'); 
+  var textToInsert = 'Alexandria Kurowski';
+  var today = new Date();
+
+  if (today.getDay() === 4 && today.getHours() === 16) {
+    var body = doc.getBody();
+    var found = false;
+
+    for (var i = 0; i < body.getNumChildren(); i++) {
+      var child = body.getChild(i);
+      if (child.getType() === DocumentApp.ElementType.PARAGRAPH) {
+        var paragraph = child.asParagraph();
+        var paragraphText = paragraph.getText();
+        
+        if (paragraphText === 'Students Attending Seminar:') {
+          if (paragraphText.indexOf(textToInsert) === -1) {
+            paragraph.appendText('\n' + textToInsert);
+            found = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+}
